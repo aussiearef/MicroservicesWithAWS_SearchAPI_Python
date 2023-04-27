@@ -8,14 +8,14 @@ WORKDIR /app
 COPY . /app
 
 # Install any needed packages specified in requirements.txt
-pip3 install --upgrade pip
+RUN pip3 install --upgrade pip
 
-pip3 install typing
-pip3 install fastapi
-pip3 install fastapi.responses
-pip3 install elasticsearch
-pip3 install elasticsearch_dsl
-pip3 install elasticsearch.exceptions
+RUN pip3 install typing
+RUN pip3 install fastapi
+RUN pip3 install fastapi.responses
+RUN pip3 install elasticsearch
+RUN pip3 install elasticsearch_dsl
+RUN pip3 install elasticsearch.exceptions
 
 
 # Make port 8080 available to the world outside this container
