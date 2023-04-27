@@ -17,6 +17,9 @@ RUN pip3 install elasticsearch
 RUN pip3 install elasticsearch_dsl
 RUN pip3 install elasticsearch.exceptions
 
+RUN apt update -y
+RUN apt upgrade -y
+RUN apt install -y curl
 
 # Make port 8080 available to the world outside this container
 EXPOSE 80
