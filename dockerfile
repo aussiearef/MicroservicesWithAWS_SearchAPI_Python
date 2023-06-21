@@ -1,5 +1,5 @@
 # Use the official Python image as the parent image
-FROM python:3.9
+FROM python:3.10
 
 # Set the working directory to /app
 WORKDIR /app
@@ -15,7 +15,6 @@ RUN pip3 install fastapi
 RUN pip3 install fastapi.responses
 RUN pip3 install elasticsearch
 RUN pip3 install elasticsearch_dsl
-RUN pip3 install elasticsearch.exceptions
 
 RUN apt update -y
 RUN apt upgrade -y
