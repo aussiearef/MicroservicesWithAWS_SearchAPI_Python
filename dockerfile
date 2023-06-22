@@ -1,5 +1,5 @@
 # Use the official Python image as the parent image
-FROM python:3.10
+FROM python:3.11
 
 # Set the working directory to /app
 WORKDIR /app
@@ -10,7 +10,6 @@ COPY . /app
 # Install any needed packages specified in requirements.txt
 RUN pip3 install --upgrade pip
 
-RUN pip3 install typing
 RUN pip3 install requests
 RUN pip3 install fastapi
 RUN pip3 install fastapi.responses

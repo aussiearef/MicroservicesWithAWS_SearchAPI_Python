@@ -1,4 +1,4 @@
-from typing import List
+
 import os
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
@@ -8,6 +8,11 @@ from elasticsearch_dsl import Search, Q
 
 
 app = FastAPI()
+
+host = os.getenv("host")
+user_name = os.getenv("userName")
+password =os.getenv("password")
+index_name = os.getenv("indexName")
 
 es = Elasticsearch(
     [os.environ.get("host")],
@@ -31,6 +36,12 @@ def search_hotels(city: str, rating: int) :
 
     s = Search(using=es, index=os.environ.get("indexName"))
 
+    # match all
+    # exact match
+    # prefix (begins with)
+    # fuzzy 
+    # range (number)
+    
     if city is None:
         s = s.query(Q("match_all") & Q("range", Rating={"gte": rating}))
     else:
