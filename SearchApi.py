@@ -5,9 +5,11 @@ from fastapi.responses import JSONResponse
 import uvicorn
 from elasticsearch import Elasticsearch
 from elasticsearch_dsl import Search, Q
+import pybreaker
 
 
 app = FastAPI()
+hotel_breaker = pybreaker.CircuitBreaker(fail_max= 3, reset_timeout= 60)
 
 host = os.getenv("host")
 user_name = os.getenv("userName")
@@ -22,7 +24,12 @@ es = Elasticsearch(
 
 @app.get("/search")
 def search(city: str = None, rating: int = 1):
-    hotels =  search_hotels(city, rating)
+
+    try:
+        hotels =  search_hotels(city, rating)
+    except pybreaker.CircuitBreakerError as e:
+        print("Circuit is open.")
+    
     response = JSONResponse(content= hotels, status_code=200, 
                      headers={
             "Access-Control-Allow-Headers": "*",
@@ -31,6 +38,7 @@ def search(city: str = None, rating: int = 1):
         }, media_type="application/json")
     return response
 
+@hotel_breaker
 def search_hotels(city: str, rating: int) :
     rating = rating or 1
 

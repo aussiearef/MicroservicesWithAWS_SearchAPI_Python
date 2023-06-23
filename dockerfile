@@ -9,6 +9,7 @@ RUN pip3 install fastapi_responses
 RUN pip3 install uvicorn
 RUN pip3 install elasticsearch
 RUN pip install elasticsearch_dsl
+RUN pip install pybreaker
 
 RUN apt update -y
 RUN apt upgrade -y
