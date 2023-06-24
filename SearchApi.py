@@ -27,16 +27,16 @@ def search(city: str = None, rating: int = 1):
 
     try:
         hotels =  search_hotels(city, rating)
+        response = JSONResponse(content= hotels, status_code=200, 
+                        headers={
+                "Access-Control-Allow-Headers": "*",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "*"
+            }, media_type="application/json")
+        return response
+
     except pybreaker.CircuitBreakerError as e:
         print("Circuit is open.")
-    
-    response = JSONResponse(content= hotels, status_code=200, 
-                     headers={
-            "Access-Control-Allow-Headers": "*",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "*"
-        }, media_type="application/json")
-    return response
 
 @hotel_breaker
 def search_hotels(city: str, rating: int) :
@@ -66,4 +66,4 @@ def health_check():
     return JSONResponse(status_code= 200, content="OK")
     
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=80)
