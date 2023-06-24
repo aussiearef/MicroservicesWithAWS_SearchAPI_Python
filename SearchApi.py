@@ -61,5 +61,9 @@ def search_hotels(city: str, rating: int) :
     hotels = [hit.to_dict() for hit in response.hits.hits]
     return hotels
 
+@app.get("/health")
+def health_check():
+    return JSONResponse(status_code= 200, content="OK")
+    
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
