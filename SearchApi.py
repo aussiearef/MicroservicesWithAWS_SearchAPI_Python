@@ -58,7 +58,7 @@ def search_hotels(city: str, rating: int) :
             & Q("range", Rating={"gte": rating})
         )
     response = s.execute()
-    hotels = [hit.to_dict() for hit in response.hits.hits]
+    hotels = [hit["_source"].to_dict() for hit in response.hits.hits]
     return hotels
 
 @app.get("/health")
